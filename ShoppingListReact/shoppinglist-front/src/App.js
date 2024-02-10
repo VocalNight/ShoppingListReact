@@ -14,9 +14,9 @@ function App() {
 
   const fetchData = async () => {
     try {
-      console.log("hi");
       const response = await axios.get('https://localhost:7125/shoppingItems');
       setData(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }

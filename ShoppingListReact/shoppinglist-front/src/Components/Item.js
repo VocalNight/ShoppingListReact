@@ -5,11 +5,13 @@ export default function Item({shoppingItem, fetchData}) {
     const [item, setItem] = useState(shoppingItem);
 
     const changeState = event => {
-        item.IsPickedUp = !item.IsPickedUp;
+        let newItem = {...item, isPickedUp: !item.isPickedUp, }
         
-        axios.put('https://localhost:7125/shoppingItems/' + shoppingItem.id, shoppingItem)
+        console.log(item);
+        console.log(newItem)
+        axios.put('https://localhost:7125/shoppingItems/' + shoppingItem.id, newItem)
         .then(response => {
-            setItem(item);
+            setItem(newItem);
             fetchData();
         });
     }
@@ -24,7 +26,8 @@ export default function Item({shoppingItem, fetchData}) {
             <div >
 
             <li>{shoppingItem.name} 
-            <input value={item.IsPickedUp} 
+            <input
+            checked={item.isPickedUp} 
             onChange={() => changeState()} 
             type='checkbox'></input></li>   
 
