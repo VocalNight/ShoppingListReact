@@ -39,14 +39,14 @@ function App() {
         "Content-type": "application/json; charset=UTF-8"
       }
     })
-    .then(res => res.json())
-    .then(data => fetchData());
+      .then(res => res.json())
+      .then(data => fetchData());
   }
 
   function validateItem(event) {
     setItemName(event.target.value);
     setIsInvalid(
-      data.some(({name}) => name.toUpperCase() === event.target.value.toUpperCase())
+      data.some(({ name }) => name.toUpperCase() === event.target.value.toUpperCase())
     );
   }
 
@@ -70,18 +70,18 @@ function App() {
       {data.length != 0 &&
         <ul>
           {data.map((item) => (
-            <Item key={item.id + "div"} 
-            shoppingItem={item} 
-            fetchData={() => fetchData()} />
+            <Item key={item.id + "div"}
+              shoppingItem={item}
+              fetchData={() => fetchData()} />
           ))}
         </ul>}
-        <br></br>
+      <br></br>
 
-        {isInvalid && 
-          <div>
-            <h2>An Item with that name already exists!</h2>
-          </div>
-        }
+      {isInvalid &&
+        <div>
+          <h2>An Item with that name already exists!</h2>
+        </div>
+      }
     </>
   );
 }

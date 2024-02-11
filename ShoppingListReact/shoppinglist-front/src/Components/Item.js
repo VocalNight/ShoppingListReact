@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 
-export default function Item({shoppingItem, fetchData}) {
+export default function Item({ shoppingItem, fetchData }) {
     const [item, setItem] = useState(shoppingItem);
     const [lineClass, setLineClass] = useState('');
 
     useEffect(() => {
         validateCheckbox(shoppingItem.isPickedUp);
-      }, []);
+    }, []);
 
     const validateCheckbox = (isDashed) => {
-        if(isDashed) {
+        if (isDashed) {
             setLineClass('checkboxLined');
         } else {
             setLineClass('');
@@ -17,7 +17,7 @@ export default function Item({shoppingItem, fetchData}) {
     }
 
     const changeState = (event) => {
-        let newItem = {...item, isPickedUp: !item.isPickedUp, }
+        let newItem = { ...item, isPickedUp: !item.isPickedUp, }
 
         validateCheckbox(newItem.isPickedUp);
 
@@ -28,10 +28,10 @@ export default function Item({shoppingItem, fetchData}) {
                 "Content-type": "application/json; charset=UTF-8"
             },
         })
-        .then(res => {
-            setItem(newItem);
-            fetchData();
-        })
+            .then(res => {
+                setItem(newItem);
+                fetchData();
+            })
     }
 
     const deleteItem = () => {
@@ -42,17 +42,17 @@ export default function Item({shoppingItem, fetchData}) {
     }
 
     if (shoppingItem) {
-        return(
+        return (
             <div >
 
-            <li className={lineClass}>{shoppingItem.name} 
-            <input
-            checked={item.isPickedUp} 
-            onChange={(e) => changeState(e)} 
-            type='checkbox'></input></li>   
+                <li className={lineClass}>{shoppingItem.name}
+                    <input
+                        checked={item.isPickedUp}
+                        onChange={(e) => changeState(e)}
+                        type='checkbox'></input></li>
 
-            <button onClick={() => deleteItem()}>Delete</button>   
-            </div> 
+                <button onClick={() => deleteItem()}>Delete</button>
+            </div>
         );
     }
 
@@ -60,5 +60,5 @@ export default function Item({shoppingItem, fetchData}) {
         <></>
     );
 
-   
+
 }

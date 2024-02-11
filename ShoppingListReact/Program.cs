@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ShoppingListReact.Models;
-using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 const string corsPolicy = "any origin";
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: corsPolicy, policy =>
