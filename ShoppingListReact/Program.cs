@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using ShoppingListReact.Models;
 using System;
 
@@ -41,6 +42,12 @@ using (var scope = app.Services.CreateScope())
 
 app.MapPost("/shoppingItems", async ( Item ShoppingItem, ShoppingListContext db ) =>
 {
+
+    if (ShoppingItem.Name.IsNullOrEmpty() )
+    {
+        return Results.NoContent();
+    }
+
     db.ShoppingListItems.Add(ShoppingItem);
     await db.SaveChangesAsync();
 
