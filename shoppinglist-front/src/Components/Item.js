@@ -45,13 +45,14 @@ export default function Item({ shoppingItem, fetchData }) {
         return (
             <div >
 
-                <li className={lineClass}>{shoppingItem.name}
+                <li data-testid="checkboxLabel" className={lineClass}>{shoppingItem.name}
                     <input
+                        data-testid="checkboxItem"
                         checked={item.isPickedUp}
                         onChange={(e) => changeState(e)}
                         type='checkbox'></input></li>
 
-                <button onClick={() => deleteItem()}>Delete</button>
+                <button data-testid="itemDelete" onClick={() => deleteItem()}>Delete</button>
             </div>
         );
     }

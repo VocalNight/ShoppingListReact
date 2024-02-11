@@ -56,10 +56,11 @@ function App() {
       <div>
         <input
           type='text'
+          data-testid="itemInput"
           value={itemName}
           onChange={event => validateItem(event)}
           placeholder='Add item to cart...'></input>
-        <button onClick={() => AddItem()}>Include</button>
+        <button data-testid="AddItemBut" onClick={() => AddItem()}>Include</button>
       </div>
 
       {data.length == 0 &&
@@ -70,7 +71,9 @@ function App() {
       {data.length != 0 &&
         <ul>
           {data.map((item) => (
-            <Item key={item.id + "div"}
+            <Item 
+              key={item.id + "div"}
+              data-testid={item.name}
               shoppingItem={item}
               fetchData={() => fetchData()} />
           ))}
