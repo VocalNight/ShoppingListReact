@@ -1,18 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from 'axios';
 
 export default function Item({shoppingItem, fetchData}) {
     const [item, setItem] = useState(shoppingItem);
+    const [lineClass, setLineClass] = useState('');
 
-    const changeState = event => {
+    useEffect(() => {
+        validateCheckbox(shoppingItem.isPickedUp);
+      }, []);
+
+    const validateCheckbox = (isDashed) => {
+        if(isDashed) {
+            setLineClass('checkboxLined');
+        } else {
+            setLineClass('');
+        }
+    }
+
+    const changeState = (event) => {
         let newItem = {...item, isPickedUp: !item.isPickedUp, }
-        
-        console.log(item);
-        console.log(newItem)
+
+        validateCheckbox(newItem.isPickedUp);
+
         axios.put('https://localhost:7125/shoppingItems/' + shoppingItem.id, newItem)
         .then(response => {
             setItem(newItem);
-            fetchData();
+            fetchData();  
         });
     }
 
@@ -25,10 +38,10 @@ export default function Item({shoppingItem, fetchData}) {
         return(
             <div >
 
-            <li>{shoppingItem.name} 
+            <li className={lineClass}>{shoppingItem.name} 
             <input
             checked={item.isPickedUp} 
-            onChange={() => changeState()} 
+            onChange={(e) => changeState(e)} 
             type='checkbox'></input></li>   
 
             <button onClick={() => deleteItem()}>Delete</button>   
