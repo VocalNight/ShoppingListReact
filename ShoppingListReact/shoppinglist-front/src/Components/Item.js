@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from 'axios';
 
 export default function Item({shoppingItem, fetchData}) {
     const [item, setItem] = useState(shoppingItem);
@@ -22,16 +21,24 @@ export default function Item({shoppingItem, fetchData}) {
 
         validateCheckbox(newItem.isPickedUp);
 
-        axios.put('https://localhost:7125/shoppingItems/' + shoppingItem.id, newItem)
-        .then(response => {
+        fetch('https://localhost:7125/shoppingItems/' + shoppingItem.id, {
+            method: 'PUT',
+            body: JSON.stringify(newItem),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            },
+        })
+        .then(res => {
             setItem(newItem);
-            fetchData();  
-        });
+            fetchData();
+        })
     }
 
     const deleteItem = () => {
-        axios.delete('https://localhost:7125/shoppingItems/' + shoppingItem.id)
-        .then(response => fetchData());
+
+        fetch('https://localhost:7125/shoppingItems/' + shoppingItem.id, {
+            method: 'DELETE'
+        }).then(res => fetchData());
     }
 
     if (shoppingItem) {

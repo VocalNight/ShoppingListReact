@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import './App.css';
-import axios from 'axios';
+
 import Item from './Components/Item';
 
 function App() {
@@ -14,13 +14,14 @@ function App() {
   }, [])
 
   const fetchData = async () => {
-    try {
-      const response = await axios.get('https://localhost:7125/shoppingItems');
-      setData(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
+    fetch('https://localhost:7125/shoppingItems')
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   };
 
   const AddItem = () => {
@@ -29,7 +30,17 @@ function App() {
       return;
     }
 
-    axios.post('https://localhost:7125/shoppingItems', { name: itemName, IsPickedUp: false }).then(response => fetchData());
+    fetch('https://localhost:7125/shoppingItems', {
+      method: 'POST',
+      body: JSON.stringify({
+        name: itemName, IsPickedUp: false
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    })
+    .then(res => res.json())
+    .then(data => fetchData());
   }
 
   function validateItem(event) {
